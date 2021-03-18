@@ -1,0 +1,47 @@
+.ex-weekpicker-form-control{
+    float:left;
+}
+
+.ex-weekpicker{
+    background-color:white;
+}
+
+body {
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+table {
+	font-size: 1em;
+}
+.ex-weekpicker-input{
+    width:350px;
+}
+
+.ex-weekpicker-form-controller .ex-weekpicker-controlButton{
+    display:inline-block;
+    width:100px;
+    height:30px;
+}
+
+.ex-weekpicker-controlButton{
+    float:left;
+    border: 1px solid #999;
+}
+
+.ex-weekpicker-controlButton .ex-weekpicker-right{
+    display:inline-block;
+}
+
+.ex-weekpicker-form-control .ex-weekpicker-yearchange{
+    float:right;
+}
+
+.ex-weekpicker-weekSelect:hover{
+    background-color: aquamarine !important;
+}
+.ex-weekpicker-weekSelect{
+    background-color: white !important;
+}
+.ex-weekpicker-weekSelect:active{
+    background-color: rgb(224, 33, 215) !important;
+}
