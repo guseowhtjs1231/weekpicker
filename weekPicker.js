@@ -14,7 +14,7 @@ $.fn.Weekpicker = function (option) {
     
     $(this).addClass('ex-weekpicker ex-weekpicker-input '+id).attr("onclick","showWeekPicker("+id+")")
 
-    $('body').on('click', function (e) {
+    $(window).on('click', function (e) {
         if ($(e.target).hasClass('ex-weekpicker') ||
             $(e.target).parent().hasClass('ex-weekpicker') ||
             $(e.target).parent().parent().hasClass('ex-weekpicker') ||

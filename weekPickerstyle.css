@@ -1,5 +1,5 @@
 .ex-weekpicker-form-control{
-    float:left;
+    position:relative;
 }
 
 .ex-weekpicker{
@@ -24,7 +24,7 @@ table {
 }
 
 .ex-weekpicker-controlButton{
-    float:left;
+ 
     border: 1px solid #999;
 }
 
