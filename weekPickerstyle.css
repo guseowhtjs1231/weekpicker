@@ -6,42 +6,70 @@
     background-color:white;
 }
 
+.blue_btn{
+    border-radius: 1px;
+    overflow: hidden;
+    border-left: 1px solid #ddd; 
+    text-align: center;
+}
+
 body {
 	font-family: Arial, Helvetica, sans-serif;
 }
-
-table {
-	font-size: 1em;
+.ex-weekpicker-weekSelect > td{
+    text-align:center;
 }
-.ex-weekpicker-input{
-    width:350px;
+.ex-weekpicker-controlpanel{
+    left:50%;
+    position: relative;
+    margin-left: -100px;
+    border: 1px solid white;
+    display: inline-block;
 }
 
-.ex-weekpicker-form-controller .ex-weekpicker-controlButton{
+.ex-weekpicker-form-controller{
     display:inline-block;
-    width:100px;
-    height:30px;
+    width:90px;
+    height:25px;
+    text-align:center;
 }
 
-.ex-weekpicker-controlButton{
+select > option{
+    font-size:18px;
+}
+
+.ex-weekpicker-controlButton-left{
+    background-color:white;
+    display:inline-block;
+    height:28px;
+    
+}
+
+.ex-weekpicker-controlButton-right{
+    background-color:white;
+    display:inline-block;
+    height:28px;
  
-    border: 1px solid #999;
 }
 
-.ex-weekpicker-controlButton .ex-weekpicker-right{
-    display:inline-block;
-}
-
-.ex-weekpicker-form-control .ex-weekpicker-yearchange{
-    float:right;
+.ex-weekpicker-yearchange{
+    display: inline-block;
+    font-size:15px;
+    width:50px;
+    height:25px;
+    text-align:center;
 }
 
 .ex-weekpicker-weekSelect:hover{
     background-color: aquamarine !important;
 }
 .ex-weekpicker-weekSelect{
-    background-color: white !important;
+    font-family:Arial;
 }
 .ex-weekpicker-weekSelect:active{
     background-color: rgb(224, 33, 215) !important;
+}
+
+.clicked{
+    background-color: yellow;
 }

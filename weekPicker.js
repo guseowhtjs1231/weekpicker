@@ -1,18 +1,22 @@
-let exWPs = []; exWPID = 0
+let exWPs = []; exWPID = 0; exWPset = {};
 $.fn.Weekpicker = function (option) {
     let current_year = (new Date()).getFullYear();
     let current_month = (new Date()).getMonth();
     let id = new Date().getMilliseconds() + new Date().getMinutes();
     let fixedOption = _customSetting(option)
-
-    $(this).parent().append(_htmlGenerate(id, fixedOption)).trigger("create");;
+    
+    $(this).parent().append(_htmlGenerate(id, fixedOption))
+    .append("<p><button class='btn btn-primary' type='button' id='set"+id+"' onclick='javascript:setDate("+id+")'>Set</button></p>")
+    .append("<p><button class='btn btn-primary' type='button' id='get"+id+"' onclick='javascript:getDate("+id+")'>Get</button></p>")
+    .append("<p><button class='btn btn-primary' type='button' id='clear"+id+"' onclick='javascript:clearDate("+id+")'>Clear</button></p>")
+    .trigger("create");;
 
     $("#yearChange" + id).val(current_year);
     $("#monthChange" + id).val(current_month);
     
     changeYearMonth(current_year, current_month, id, fixedOption.showWeek, fixedOption.firstDay);
     
-    $(this).addClass('ex-weekpicker ex-weekpicker-input '+id).attr("onclick","showWeekPicker("+id+")")
+    $(this).addClass('ex-weekpicker ex-weekpicker-input '+id).attr("onclick","showWeekPicker("+id+")").attr('readonly',true)
 
     $(window).on('click', function (e) {
         if ($(e.target).hasClass('ex-weekpicker') ||
@@ -23,7 +27,26 @@ $.fn.Weekpicker = function (option) {
             $(e.target).parent().parent().parent().parent().parent().hasClass('ex-weekpicker'))return;
         exCloseWeekPicker();
     });
+    exWPset[id]= [];
+    exWPset[id+'wait']=[]
 
+    $("#tb_body"+id).on('click',function(e){
+        $(e.target).parent().addClass('clicked');
+        if($(e.target).parent().siblings('.clicked'))$(e.target).parent().siblings('.clicked').removeClass('clicked');
+        
+        exWPset[id+"wait"][2] = Number(e.target.id);
+        exWPset[id+"wait"][1] = Number($("#monthChange" + id).val());
+        exWPset[id+"wait"][0] = Number($("#yearChange" + id).val());
+        
+    });
+
+    $("#set"+id).on('click',function(){
+        exWPset[id][3] = exWPset[id+"wait"][2] 
+        exWPset[id][2] = exWPset[id+"wait"][1]
+        exWPset[id][1] = exWPset[id+"wait"][0]
+        
+    })
+    
     $("#ex-weekpicker-" + id).on("mousewheel", function(e){
         let E = e.originalEvent;
         let deltaY = E.wheelDelta
@@ -33,45 +56,87 @@ $.fn.Weekpicker = function (option) {
         m = Number($("#monthChange" + id).val());
         if (direction > 0){
             m = m + 1
-            console.log("스크롤 플러스될 때 :"+Math.round(direction/5))
             if (m == 12){
                 y = y + 1
                 m = 0
             }
         } else if(direction < 0){
             m = m - 1
-            console.log("스크롤 마이너스 될 때 :"+Math.round(direction/5))
             if (m === -1){
                 y = y - 1
                 m = 11
             }
         }
-        
         $("#yearChange" + id).val(y);
         $('#monthChange' + id).val(m);
         changeYearMonth(y, m, id, fixedOption.showWeek, fixedOption.firstDay)
     })
 }
+
+function setDate(id){
+    findInputElement = $("."+id)
+    weekValue = findInputElement.val()
+    
+    if(exWPset[id][0]==""){
+        if(weekValue==""){
+            $(findInputElement).val("Select first");
+        }else{
+            if(weekValue=="Select first") return;
+            exWPset[id][0] = weekValue
+        }
+    }else{
+        if(weekValue==exWPset[id][0]) return;
+        else {
+            if(weekValue=="")return;
+            else{
+            exWPset[id][0]=weekValue;
+            $(findInputElement).val(exWPset[id][0]);
+            }
+        }
+    };
+    
+ };
+
+
+function clearDate(id){
+    $("."+id).val("")
+}
+
+ function getDate(id){
+     setValue=exWPset[id][0]
+     $("."+id).val(setValue)
+ }
+
 function showWeekPicker(id){
     $("#ex-weekpicker-" + id).toggle()
 }
+
 function getWeekNumber(nthWeek, id) {
-    let yearValue = $('#yearChange'+ id).val()
-    let selectedFormat = $("#formatOption"+ id).val()
-    let findInputElement = $("."+id)
-    console.log(findInputElement)
-    if (selectedFormat == "YYYY-WW"){
+    yearValue = $('#yearChange'+ id).val()
+    //let selectedFormat = $("#formatOption"+ id).val()
+    findInputElement = $("."+id)
+    weekDuration = formattingDate(nthWeek, id, yearValue)
+    startdate = new Date(weekDuration[0])
+    enddate = new Date(weekDuration[1])
+
+    if (option.displayTemplate) {
+        let displayText = option.displayTemplate(
+            nthWeekOfYear(nthWeek, id),
+            startdate,
+            enddate);
+        $(findInputElement).val(displayText);
+        $("#ex-weekpicker-" + id).toggle()
+    }
+    else{
         $(findInputElement).val(yearValue+"-W"+nthWeekOfYear(nthWeek, id) )
-       
-    } else if(selectedFormat == "MM/DD/YYYY~MM/DD/YYYY"){
-        $(findInputElement).val(forammtingMMDDYYYY(nthWeek, id, yearValue))
+        $("#ex-weekpicker-" + id).toggle()
     }
 }
 
 function _customSetting(option) {
-    let monthNames = {0: "January", 1: "February", 2: "March", 3: "April", 4: "May", 5: "June",
-    6: "July", 7: "August", 8: "September", 9: "October", 10: "November", 11: "December" };//default
-    let dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] //default
+    let monthNames = {0: "JAN", 1: "FEB", 2: "MAR", 3: "APR", 4: "MAY", 5: "JUN",
+    6: "JUL", 7: "AUG", 8: "SEP", 9: "OCT", 10: "NOV", 11: "DEC" };//default
+    let dayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"] //default
     let sunday = ""
     if (!option.monthNames) {
         option.monthNames = monthNames
@@ -90,12 +155,9 @@ function _htmlGenerate(id, option) {
     let prevText = "Prev";
     let nextText = "Next";
 
-    let width
-    if (option.showWeek){width=400;}else{width=350}
-    
     let dpDiv = $("<div/>", {
         id: "ex-weekpicker-"+id,
-        style: 'width:'+width+'px;display:none;border:5px ridge;z-index:9999;',
+        style: 'display:none;border:5px ridge;z-index:9999;float:none;position:absolute;',
     }).addClass('ex-weekpicker ex-weekpicker-ui-weekpicker');
 
     let prev, monthOption, next, yearInput, todayButton, selectFormat
@@ -104,10 +166,9 @@ function _htmlGenerate(id, option) {
         type: 'button',
         value: prevText,
         id: 'prevButton' + id,
-        class: 'ex-weekpicker-controlButton ex-weekpicker-left',
-        
+        class: 'ex-weekpicker-controlButton-left',
     }).attr('onclick', 'changeMonth(-1,' + id + ', ' + option.showWeek + ', ' + option.firstDay + ')').append($('<i />', {
-        class: 'ex-weekpicker fa fa-calendar-minus fa-3',
+        class: 'ex-weekpicker fas fa-chevron-left',
     }));
 
     monthOption = $('<select />', {
@@ -119,35 +180,33 @@ function _htmlGenerate(id, option) {
         type: "button",
         value: nextText,
         id: 'nextButton' + id,
-        class: "ex-weekpicker-controlButton ex-weekpicker-right"
+        class: "ex-weekpicker-controlButton-right"
     }).attr('onclick', 'changeMonth(1,' + id + ',' + option.showWeek + ', ' + option.firstDay + ')').append($('<i/>', {
-        class: 'ex-weekpicker fa fa-calendar-plus fa-3',
+        class: 'ex-weekpicker fas fa-chevron-right',
     }));
 
     yearInput = $('<input />', {
         type: "text",
         id: "yearChange" + id,
-        style: "width:"+Math.round(width*0.28)+"px;float:right;height:30px;",
-        class: "ex-weekpicker-form-control ex-weekpicker-yearchange"
+        class: "ex-weekpicker-yearchange"
     }).attr('onchange', 'changeYear(' + id + ', ' + option.showWeek + ', ' + option.firstDay + ')');
 
-    todayButton = $('<button>이번 달</button>', {
-        type: 'button',
-        value: 'goToday',
-        id: 'todayFindButton',
-        class: 'ex-weekpicker-form-control',
-        style: 'float:right;',
-    }).attr('onclick', 'goToToday(' + id + ', ' + option.showWeek + ', ' + option.firstDay + ')').append($('<i/>', {
-        class: 'ex-weekpicker fa fa-calendar',
-        value: 'Today',
-    }));
+    // todayButton = $('<button>This month</button>', {
+    //     type: 'button',
+    //     value: 'goToday',
+    //     id: 'todayFindButton',
+    //     class: 'ex-weekpicker-form-control',
+    //     style: 'float:right;',
+    // }).attr('onclick', 'goToToday(' + id + ', ' + option.showWeek + ', ' + option.firstDay + ')').append($('<i/>', {
+    //     class: 'ex-weekpicker fa fa-calendar',
+    //     value: 'Today',
+    // }));
 
-    selectFormat = $('<select />', {
-        id: "formatOption"+id,
-        style:'width:'+(width*0.78)+'px;float:right;',
-    })
-    .append("<option value='YYYY-WW'>YYYY-WW</option>")
-    .append("<option value='MM/DD/YYYY~MM/DD/YYYY'>MM/DD/YYYY~MM/DD/YYYY</option>")
+    // selectFormat = $('<select />', {
+    //     id: "formatOption"+id,
+    // })
+    // .append("<option value='YYYY-WW'>YYYY-WW</option>")
+    // .append("<option value='MM/DD/YYYY~MM/DD/YYYY'>MM/DD/YYYY~MM/DD/YYYY</option>");
     
     for (let i = 0; i < 12; i++) {
         monthOption.append("<option value=" + i + ">" + option.monthNames[i] + "</option>")
@@ -155,15 +214,21 @@ function _htmlGenerate(id, option) {
 
     format = $('<p>Format:</p>',{
         style:'font-size:20px;'
-    })
+    });
+
+    controlPanel = $('<div>',{
+        id:"ex-weekpicker-controlpanel"+id,
+        class:"ex-weekpicker-controlpanel",
+    });
 
     format.append(selectFormat);
-    dpDiv.append(prev);
-    dpDiv.append(monthOption);
-    dpDiv.append(next);
-    dpDiv.append(yearInput);
-    dpDiv.append(todayButton);
-    dpDiv.append(format);
+    controlPanel.append(prev);
+    controlPanel.append(yearInput);
+    controlPanel.append(monthOption);
+    controlPanel.append(next);
+    dpDiv.append(controlPanel)
+    //dpDiv.append(todayButton);
+    // dpDiv.append(format);
     
 
 
@@ -181,7 +246,7 @@ function _htmlGenerate(id, option) {
                 $('<td>' + option.dayNames[a] + '</td>').appendTo(tableRow)
             }
         } else {
-            $('<td>WK</td>').appendTo(tableRow)
+            $('<td>#</td>').appendTo(tableRow)
             for (let a = 0; a < option.dayNames.length; a++) {
                 $('<td>' + option.dayNames[a] + '</td>').appendTo(tableRow)
             }
@@ -208,7 +273,7 @@ function _htmlGenerate(id, option) {
 function renderCalendar(data, id, showWeek) {
     let h = [];
     for (let i = 0; i < data.length; i++) {
-        let nthWeek = Math.floor(i / 7)+1;
+        nthWeek = Math.floor(i / 7)+1;
         if (i == 0) {
             if (showWeek) {
                 h.push('<tr name="'+nthWeek+'thweek'+id+'" onclick="getWeekNumber(' + nthWeek + ',' + id + ');" class="ex-weekpicker-weekSelect">');
@@ -310,7 +375,7 @@ function nthWeekOfYear(nthWeek, id) {
     return nthWeekOfThisYear
 }
 
-function forammtingMMDDYYYY(nth, id, yearValue){
+function formattingDate(nth, id, yearValue){
     start   = Number($('tr[name='+nth+'thweek'+id+']').children("[name='day']:first").attr('id'))
     end     = Number($('tr[name='+nth+'thweek'+id+']').children("[name='day']:last").attr('id'))
     firstYear = Number(yearValue)
@@ -318,7 +383,8 @@ function forammtingMMDDYYYY(nth, id, yearValue){
     secondMonth = firstMonth  
     secondYear  = firstYear
         if ( firstMonth == 12 ){
-            if ( nthWeekOfYear(nth , id)==1 ){
+            if ( nthWeekOfYear(nth , id)==1 &&
+            $('#monthChange'+id).val()==11){
                 secondYear = firstYear+1
             }
         }
@@ -326,8 +392,10 @@ function forammtingMMDDYYYY(nth, id, yearValue){
         if(start > end){
             if(nth == 1){
                 firstMonth = firstMonth-1
-                if(firstMonth == 0){firstMonth = 12}
-                if(firstMonth == 1){firstYear = firstYear-1}
+                if(firstMonth == 0){
+                    firstMonth = 12
+                    firstYear = firstYear-1
+                }
             }else if(nth >=4){
                 secondMonth = secondMonth + 1
                 if(secondMonth>12){secondMonth = 1}
@@ -344,7 +412,7 @@ function forammtingMMDDYYYY(nth, id, yearValue){
         if (start.length<2){start = '0'+start};
         if (end.length<2){end = '0'+end};
         
-        return firstMonth+'/'+start+'/'+firstYear+'~'+secondMonth+'/'+end+'/'+secondYear
+        return [firstMonth+'/'+start+'/'+firstYear, secondMonth+'/'+end+'/'+secondYear]
 
 }
 
@@ -400,9 +468,16 @@ function exCloseWeekPicker(){
     }
 }
 
+$(document).ready(function () {
+    
+});
+
 $(document).keyup(function (e) {
     if (e.key === "Escape") { // escape key maps to keycode `27`
         exCloseWeekPicker();
     }
 });
 
+//set value -> 기본 값 느낌
+//이쁘게 beauitfy.
+//customized format.
