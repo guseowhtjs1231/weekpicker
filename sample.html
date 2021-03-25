@@ -18,13 +18,13 @@
 <body >
     <div>
         <div style="display:inline-block;margin:70px;">
-            <input type="text" id="date" /> 
+            <input type="text" id="date0" /> 
         </DIV>
         <div style="float:left;margin:70px;">
             <input type="text" id="date1" />
         </div>
         <div style="float:left;margin:70px;">
-            <input type="text" id="date123" />
+            <input type="text" id="date2" />
             
         </div>
     </div>
@@ -56,7 +56,7 @@
         //     }
         // };
         option = {
-            firstDay: 1, //0 : sunday시작 , 1: monday 시작
+            firstDay: 0, //0 : sunday시작 , 1: monday 시작
              showWeek: true, // 몇 번째 주인지 나옴
             weekHeader: '??', 
             //monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
@@ -77,10 +77,12 @@
             }
         };
        
+
+        
     
-        $("#date").Weekpicker(option)
+        $("#date0").Weekpicker(option)
         $("#date1").Weekpicker(option)
-        $("#date123").Weekpicker(option)
+        $("#date2").Weekpicker(option)
     });
     </script>
     

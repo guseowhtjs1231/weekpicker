@@ -13,12 +13,66 @@
     text-align: center;
 }
 
+.bt{
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+    width:70px;
+}
+
+.set{
+    margin-left:10px;
+}
+
+.clear{
+    margin-right:10px;
+}
+.get{
+    margin-right:10px;
+    margin-left:10px;
+}
+.extended-set{
+    margin-left:20px;
+}
+
+.extended-clear{
+    margin-right:20px;
+}
+
+.extended-get{
+    margin-right:20px;
+    margin-left:20px;
+}
+
+.ex-weekpicker-input{
+    display: inline-block;
+}
+
 body {
 	font-family: Arial, Helvetica, sans-serif;
 }
+
 .ex-weekpicker-weekSelect > td{
     text-align:center;
 }
+
 .ex-weekpicker-controlpanel{
     left:50%;
     position: relative;
@@ -42,6 +96,7 @@ select > option{
     background-color:white;
     display:inline-block;
     height:28px;
+    margin-right:10px;
     
 }
 
@@ -49,27 +104,32 @@ select > option{
     background-color:white;
     display:inline-block;
     height:28px;
+    margin-left:10px;
  
 }
 
 .ex-weekpicker-yearchange{
     display: inline-block;
     font-size:15px;
-    width:50px;
+    width:60px;
     height:25px;
     text-align:center;
 }
 
 .ex-weekpicker-weekSelect:hover{
-    background-color: aquamarine !important;
+    background-color:gainsboro!important;
 }
 .ex-weekpicker-weekSelect{
     font-family:Arial;
 }
 .ex-weekpicker-weekSelect:active{
-    background-color: rgb(224, 33, 215) !important;
+    background-color:lightgray !important;
 }
 
 .clicked{
-    background-color: yellow;
+    background-color: lightgray;
+}
+
+.setted{
+    background-color:antiquewhite;
 }
