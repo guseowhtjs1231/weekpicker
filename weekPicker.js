@@ -18,6 +18,7 @@ $.fn.Weekpicker = function (option) {
 
     $(this).addClass('ex-weekpicker ex-weekpicker-input ' + id).attr('readonly', true).attr("onclick", "showWeekPicker(" + id + ")")
 
+    
     $(window).on('click', function (e) {
         if ($(e.target).hasClass('ex-weekpicker') ||
             $(e.target).parent().hasClass('ex-weekpicker') ||
@@ -29,9 +30,11 @@ $.fn.Weekpicker = function (option) {
     });
 
     $(this).next().find('#' + current_date).parent().addClass('clicked');
+    checkToday(id)
     exWPset[id] = [];
     exWPset[id + 'reserved'] = []
     nthWk = $(this).next().find('.clicked').attr('name')
+
     if($(this).val()=="")getWeekNumber(nthWk.substring(0,1),id)
 
     $("#tb_body" + id).on('click', function (e) {
@@ -78,6 +81,7 @@ $.fn.Weekpicker = function (option) {
         if(d==undefined)d==current_date;
 
         changeYearMonth(y, m, id, fixedOption.showWeek, fixedOption.firstDay)
+        checkToday(id)
         if(w==undefined)return;
         $(e.target).siblings('table').find('tr[name='+w+']').addClass('setted')
     });
@@ -104,7 +108,8 @@ $.fn.Weekpicker = function (option) {
         }
         $("#yearChange" + id).val(y);
         $('#monthChange' + id).val(m);
-        changeYearMonth(y, m, id, fixedOption.showWeek, fixedOption.firstDay)
+        changeYearMonth(y, m, id, fixedOption.showWeek, fixedOption.firstDay);
+        checkToday(id);
     })
 
     $(this).keydown(function (e) {
@@ -114,6 +119,7 @@ $.fn.Weekpicker = function (option) {
             case "ArrowLeft":
                 weekName = setted.attr('name')
                 changeMonth(-1, id, fixedOption.showWeek, fixedOption.firstDay);
+                checkToday(id);
         
                 if(exWPset[id].length==5){
                     if(exWPset[id][1]==$('#yearChange'+id).val() &&
@@ -139,6 +145,7 @@ $.fn.Weekpicker = function (option) {
             case "ArrowRight":
                 weekName = setted.attr('name')
                 changeMonth(1, id, fixedOption.showWeek, fixedOption.firstDay);
+                checkToday(id);
                 if(exWPset[id].length==5){
                     if(exWPset[id][1]==$('#yearChange'+id).val() &&
                     exWPset[id][2]==$('#monthChange'+id).val()) $(e.target).next().find('tr[name="'+exWPset[id][4]+'"]').addClass('setted');
@@ -167,6 +174,7 @@ $.fn.Weekpicker = function (option) {
                 
                 if(setted.prev().length==0){
                     changeMonth(-1, id, fixedOption.showWeek, fixedOption.firstDay)
+                    checkToday(id);
                     if(exWPset[id].length==5){
                         if(exWPset[id][1]==$('#yearChange'+id).val() &&
                         exWPset[id][2]==$('#monthChange'+id).val()) $(e.target).next().find('tr[name="'+exWPset[id][4]+'"]').addClass('setted');
@@ -198,6 +206,7 @@ $.fn.Weekpicker = function (option) {
                 
                 if(setted.next().length==0){
                     changeMonth(1, id, fixedOption.showWeek, fixedOption.firstDay)
+                    checkToday(id);
                     if(exWPset[id].length==5){
                         if(exWPset[id][1]==$('#yearChange'+id).val() &&
                         exWPset[id][2]==$('#monthChange'+id).val()) $(e.target).next().find('tr[name="'+exWPset[id][4]+'"]').addClass('setted');
@@ -232,6 +241,16 @@ $.fn.Weekpicker = function (option) {
     });
 }
 
+function checkToday(id){
+    y = Number($('#yearChange'+id).val());
+    m = Number($('#monthChange'+id).val());
+    cy = new Date().getFullYear();
+    cm = new Date().getMonth();
+    cd = String(new Date().getDate());
+    console.log($('#tb_body'+id));
+    if(y==cy &&
+        m==cm)$('#tb_body'+id).find('#' + cd).addClass('today');
+}
 function setDate(id) {
     findInputElement = $("." + id)
     weekValue = findInputElement.val()
@@ -407,21 +426,21 @@ function _htmlGenerate(id, option) {
     let tableHead = $('<thead />', { class: "ex-weekpicker" });
     if (option.showWeek) {
         if (option.weekHeader) {
-            $('<td>' + option.weekHeader + '</td>').appendTo(tableRow)
+            $('<th>' + option.weekHeader + '</th>').appendTo(tableRow)
             for (let a = 0; a < option.dayNames.length; a++) {
-                $('<td>' + option.dayNames[a] + '</td>').appendTo(tableRow)
+                $('<th>' + option.dayNames[a] + '</th>').appendTo(tableRow)
             }
         } else {
-            $('<td>#</td>').appendTo(tableRow)
+            $('<th>#</th>').appendTo(tableRow)
             for (let a = 0; a < option.dayNames.length; a++) {
-                $('<td>' + option.dayNames[a] + '</td>').appendTo(tableRow)
+                $('<th>' + option.dayNames[a] + '</th>').appendTo(tableRow)
             }
         }
 
 
     } else {
         for (let a = 0; a < option.dayNames.length; a++) {
-            $('<td>' + option.dayNames[a] + '</td>').appendTo(tableRow)
+            $('<th>' + option.dayNames[a] + '</th>').appendTo(tableRow)
         }
     }
     tableHead.append(tableRow);
