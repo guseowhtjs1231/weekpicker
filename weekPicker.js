@@ -371,7 +371,7 @@ function _htmlGenerate(id, option) {
         id: 'prevButton' + id,
         class: 'ex-weekpicker-controlButton-left',
     }).attr('onclick', 'changeMonth(-1,' + id + ', ' + option.showWeek + ', ' + option.firstDay + ')').append($('<i />', {
-        class: 'ex-weekpicker fas fa-arrow-left',
+        class: 'fa fa-arrow-left',
     }));
 
     monthOption = $('<select />', {
@@ -385,7 +385,7 @@ function _htmlGenerate(id, option) {
         id: 'nextButton' + id,
         class: "ex-weekpicker-controlButton-right"
     }).attr('onclick', 'changeMonth(1,' + id + ',' + option.showWeek + ', ' + option.firstDay + ')').append($('<i/>', {
-        class: 'ex-weekpicker fas fa-arrow-right',
+        class: 'fa fa-arrow-right',
     }));
 
     yearInput = $('<input />', {
@@ -401,7 +401,7 @@ function _htmlGenerate(id, option) {
     //     class: 'ex-weekpicker-form-control',
     //     style: 'float:right;',
     // }).attr('onclick', 'goToToday(' + id + ', ' + option.showWeek + ', ' + option.firstDay + ')').append($('<i/>', {
-    //     class: 'ex-weekpicker fa fa-calendar',
+    //     class: 'fa fa-calendar',
     //     value: 'Today',
     // }));
 
