@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Page Title</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.14.3/xlsx.full.min.js"></script>
+    <!--필수, FileSaver savaAs 이용 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+    <script src='exportExcel.js'></script>
+</head>
+
+<body>
+    <table id="tableData" style="border:1px solid #dddddd">
+        <thead>
+        <tr>
+            <th style="background-color:blue;">이름</th>
+            <th>CP</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>망나뇽</td>
+            <td>4000</td>
+        </tr>
+        <tr>
+            <td>마기라스</td>
+            <td>3900</td>
+        </tr>
+        <tr>
+            <td>해피너스</td>
+            <td>=1+2</td>
+        </tr>
+        </tbody>
+        </table>
+    파일 내보내기(JSON) : <input type="button" id="excelFileExport" value="엑셀 파일 다운로드(JSON)" />
+</body>
+
+</html>

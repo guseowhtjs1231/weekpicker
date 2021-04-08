@@ -1,11 +1,5 @@
 let exWPs = []; exWPID = 0; exWPset = {};
 
-Date.prototype.addDays = function (days) {
-    var date = new Date(this.valueOf());
-    date.setDate(date.getDate() + days);
-    return date;
-}
-
 $.fn.setValue = function (val) {
     if (typeof (val) !== 'string') alert('Set value first');
     id = Number($(this).attr('class').split(' ')[2])
@@ -22,7 +16,6 @@ $.fn.setValue = function (val) {
     changeYearMonth(y, m, id, option.showWeek, option.firstDay);
     getWeekNumber(nthwk, id)
     $(this).next().find('tbody tr:nth-child(' + nthwk + ')').addClass('clicked');
-    $("#ex-weekpicker-" + id).toggle()
 }
 
 $.fn.Weekpicker = function (option) {
@@ -447,16 +440,11 @@ function _htmlGenerate(id, option) {
     dpDiv.append(controlPanel)
     //dpDiv.append(todayButton);
     // dpDiv.append(format);
-
-
-
     weekDay = $('<table />', {
         class: "ex-weekpicker table-borderd"
     });
 
-    
     defaultDayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]; //default
-    
     
     dayNames = defaultDayNames;
     sunday = "";
@@ -468,7 +456,6 @@ function _htmlGenerate(id, option) {
         dayNames.push(sunday);
     };
 
-    
     let tableRow = $('<tr />', { id: "table-head-day", class: "ex-weekpicker" });
     let tableHead = $('<thead />', { class: "ex-weekpicker" });
     if (option.showWeek) {
@@ -488,6 +475,7 @@ function _htmlGenerate(id, option) {
             $('<th>' + dayNames[a] + '</th>').appendTo(tableRow)
         }
     }
+    
     tableHead.append(tableRow);
     weekDay.append(tableHead);
     weekDay.append($('<tbody />', { id: "tb_body" + id, class: "ex-weekpicker" }));
