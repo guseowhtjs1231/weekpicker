@@ -1,7 +1,17 @@
 let exWPs = []; exWPID = 0; exWPset = {};
+//exWPset[id+"reserved"][0] --year
+//exWPset[id+"reserved"][1] --month
+//exWPset[id+"reserved"][2] --date
+//exWPset[id+"reserved"][3] --nthweekName(1thWeek+id)
+//exWPset[id][0] - #input val()
+//exWPset[id][1] - year
+//exWPset[id][2] - month
+//exWPset[id][3] - date
+//exWPset[id][4] - nthweekName(1thWeek+id)
 
-$.fn.setValue = function (val) {
+$.fn.exWPsetValue = function (val) {
     if (typeof (val) !== 'string') alert('Set value first');
+    console.log(typeof val)
     id = Number($(this).attr('class').split(' ')[2])
     y = val.substring(0, 4)
     w = Number(val.substring(6, 8))
@@ -10,20 +20,63 @@ $.fn.setValue = function (val) {
     setted_date = first.addDays(gap)
     m = setted_date.getMonth();
     d = setted_date.getDate() - first.getDay();;
+
     $('#yearChange' + id).val(y)
     $('#monthChange' + id).val(m)
+
     nthwk = Math.floor(d / 7) + 1;
+    exWPset[id][5] = val
+
     changeYearMonth(y, m, id, option.showWeek, option.firstDay);
     getWeekNumber(nthwk, id)
+
     $(this).next().find('tbody tr:nth-child(' + nthwk + ')').addClass('clicked');
 }
 
+$.fn.exWPshowValue = function () {
+    id = Number($(this).attr('class').split(' ')[2])
+    console.log(exWPset)
+    alert(exWPset[id][5])
+}
+
 $.fn.Weekpicker = function (option) {
+    this.getValue = function () {
+        id = Number($(this).attr('class').split(' ')[2])
+        console.log(exWPset)
+        alert(exWPset[id][5])
+    }
+    this.setValue = function (val) {
+        if (typeof (val) !== 'string') alert('Set value first');
+        console.log(typeof val)
+        id = Number($(this).attr('class').split(' ')[2])
+        y = val.substring(0, 4)
+        w = Number(val.substring(6, 8))
+        first = new Date('01-01-' + y);
+        gap = w * 7
+        setted_date = first.addDays(gap)
+        m = setted_date.getMonth();
+        d = setted_date.getDate() - first.getDay();;
+
+        $('#yearChange' + id).val(y)
+        $('#monthChange' + id).val(m)
+
+        nthwk = Math.floor(d / 7) + 1;
+        exWPset[id][5] = val
+
+        changeYearMonth(y, m, id, option.showWeek, option.firstDay);
+        getWeekNumber(nthwk, id)
+
+        $(this).next().find('tbody tr:nth-child(' + nthwk + ')').addClass('clicked');
+    }
+    if (option === 'instance') {
+        
+        
+    }
     let current_year = (new Date()).getFullYear();
     let current_month = (new Date()).getMonth();
     let current_date = (new Date()).getDate();
     let id = new Date().getMilliseconds() + new Date().getMinutes();
-    
+
 
     $(this).parent().append(_htmlGenerate(id, option));
 
@@ -44,7 +97,7 @@ $.fn.Weekpicker = function (option) {
             $(e.target).parent().parent().parent().parent().parent().hasClass('ex-weekpicker')) return;
         exAllCloseWeekPicker();
     });
-    
+
     if (current_date < 7 &&
         $(this).next().find('#' + current_date).length == 2) $(this).next().find('tbody').find('tr:first').find('#' + current_date).parent().addClass('clicked');
     else if (current_date > 22 &&
@@ -54,7 +107,7 @@ $.fn.Weekpicker = function (option) {
     checkToday(id)
     exWPset[id] = [];
     exWPset[id + 'reserved'] = []
-    
+
     $('#prevButton' + id).on('click', function (e) {
         checkToday(id)
     });
@@ -266,8 +319,8 @@ $.fn.Weekpicker = function (option) {
                 // if ($(e.target).next().find('.setted').length == 1) $(e.target).next().find('.setted').removeClass('setted');
                 // $(e.target).next().find('.clicked').addClass('setted');
                 setDate(id)
-            
-            case "Escape": 
+
+            case "Escape":
                 exAllCloseWeekPicker();
         }
     });
@@ -416,8 +469,8 @@ function _htmlGenerate(id, option) {
         6: "JUL", 7: "AUG", 8: "SEP", 9: "OCT", 10: "NOV", 11: "DEC"
     };//default
     monthNames = defaultMonthNames;
-    
-    if (option.monthNames)monthNames = option.monthNames;
+
+    if (option.monthNames) monthNames = option.monthNames;
 
     for (let i = 0; i < 12; i++) {
         monthOption.append("<option value=" + i + ">" + monthNames[i] + "</option>")
@@ -435,8 +488,8 @@ function _htmlGenerate(id, option) {
     format.append(selectFormat);
     controlPanel.append(yearInput);
     controlPanel.append(monthOption);
-    controlPanel.append(next);
     controlPanel.append(prev);
+    controlPanel.append(next);
     dpDiv.append(controlPanel)
     //dpDiv.append(todayButton);
     // dpDiv.append(format);
@@ -445,11 +498,11 @@ function _htmlGenerate(id, option) {
     });
 
     defaultDayNames = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"]; //default
-    
+
     dayNames = defaultDayNames;
     sunday = "";
 
-    
+
     if (option.dayNames) { dayNames = option.dayNames };
     if (option.firstDay == 1) {
         sunday = dayNames.shift();
@@ -475,7 +528,7 @@ function _htmlGenerate(id, option) {
             $('<th>' + dayNames[a] + '</th>').appendTo(tableRow)
         }
     }
-    
+
     tableHead.append(tableRow);
     weekDay.append(tableHead);
     weekDay.append($('<tbody />', { id: "tb_body" + id, class: "ex-weekpicker" }));
@@ -685,11 +738,11 @@ function nthWeekOfYear(nthWeek, id) {
     if (nthWeekOfThisYear == 53) {
         if (checkLeapYear(year)) {
             if (option.firstDay == 0) {
-                if (first_of_month.getDay() !== 4 && 
-                first_of_month.getDay() !== 5) nthWeekOfThisYear = 1
+                if (first_of_month.getDay() !== 4 &&
+                    first_of_month.getDay() !== 5) nthWeekOfThisYear = 1
             } else {
                 if (first_of_month.getDay() !== 0 &&
-                first_of_month.getDay() !== 5) nthWeekOfThisYear = 1
+                    first_of_month.getDay() !== 5) nthWeekOfThisYear = 1
             }
         } else {
             if (option.firstDay == 0) {

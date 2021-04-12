@@ -45,7 +45,7 @@
                 weekHeader: 'WK',
                 //monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
                 displayTemplate: function (weekName, firstDate, lastDate) {  //어떻게 표시할지 사용자가 지정 가능
-                    let format = 'yyyy/MM/dd'
+                    let format = 'MM/dd'
                     startPoint = formatDate(firstDate, format)
                     endPoint = formatDate(lastDate, format)
                     nthWeek = (String(weekName).length < 2 ? '0' + String(weekName) : String(weekName))
@@ -55,7 +55,7 @@
                         if (lastDate.getMonth() == 0) year = lastDate.getFullYear()
                         else if (firstDate.getMonth() == 11) year = firstDate.getFullYear()
                     }
-                    return year + '-' + 'W' + nthWeek
+                    return year + " "+ startPoint+" ~ " + endPoint
                 }
             };
 
@@ -65,26 +65,24 @@
         });
 
         function showValue1() {
-            alert($('#date0').val());
+            let weekcal  = $('#date0').Weekpicker('instance');
+            alert(weekcal.getValue());
         }
         function showValue2() {
-            alert($('#date1').val());
+
         }
         function showValue3() {
-            alert($('#date2').val());
+            $('#date2').Weekpicker('instance').setValue();
         }
         function setValue1(val) {
-            $('#date0').setValue(val);
+            $('#date0').Weekpicker('instance');
         }
         function setValue2(val) {
-            $('#date1').setValue(val);
+            $('#date1').Weekpicker('instance');
         }
         function setValue3(val) {
-            $('#date2').setValue(val);
+            $('#date2').Weekpicker('instance');
         }
-
     </script>
-
 </body>
-
 </html>

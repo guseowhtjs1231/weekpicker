@@ -14,7 +14,7 @@
 .ex-weekpicker-controlpanel>select > option{font-size:18px;}
 .ex-weekpicker-controlpanel>button{padding:0;border-width:0;background-color:white;}
 
-.ex-weekpicker>.ex-weekpicker-ui-weekpicker>.ex-weekpicker-controlpanel>.ex-weekpicker-controlButton-left{float:right;width:16%;margin-top:2px;}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>.ex-weekpicker-controlpanel>.ex-weekpicker-controlButton-left{position:relative;width:16%;margin-top:2px;}
 .ex-weekpicker>.ex-weekpicker-ui-weekpicker>.ex-weekpicker-controlpanel>.ex-weekpicker-controlButton-left > i{border:0;}
 .ex-weekpicker>.ex-weekpicker-ui-weekpicker>.ex-weekpicker-controlpanel>.ex-weekpicker-controlButton-left:hover {background-color:rgb(241, 241, 241)!important;}
 .ex-weekpicker>.ex-weekpicker-ui-weekpicker>.ex-weekpicker-controlpanel>.ex-weekpicker-controlButton-left:hover i{background-color:rgb(241, 241, 241)!important;}
