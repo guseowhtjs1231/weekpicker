@@ -1,0 +1,50 @@
+.ex-weekpicker{font-family: Arial, Helvetica, sans-serif; color:black;vertical-align: top;border-color:#dee2e6;caption-side: bottom;border-collapse: collapse;}
+.ex-weekpicker .ex-weekpicker-ui-weekpicker{border: 0.5px solid rgb(200,200,200);}
+
+
+.ex-weekpicker-controlpanel{width:100%;position: relative;display: inline-block;min-width:174px;max-width:205px;}
+.ex-weekpicker-controlpanel>.ex-weekpicker-yearchange{
+    position:relative;font-size:15px;width:50px;height:25px;text-align:center;left:0;border-width:0;background-color:rgb(240,240,240);;}
+.ex-weekpicker-controlpanel>.ex-weekpicker-yearchange:hover{border: 0.01px solid rgb(220,220,220); background-color:#f6f6f6;}
+
+.ex-weekpicker-controlpanel>.ex-weekpicker-form-controller{
+    position:relative;width:65px;height:25px;text-align:center;margin-left:1px;font-size:15px;border-width:0;background-color:rgb(240,240,240);}
+.ex-weekpicker-controlpanel>.ex-weekpicker-form-controller:hover{background-color:#f6f6f6;}
+
+.ex-weekpicker-controlpanel>select > option{font-size:18px;}
+.ex-weekpicker-controlpanel>button{padding:0;border-width:0;background-color:white;}
+
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>.ex-weekpicker-controlpanel>.ex-weekpicker-controlButton-left{position:relative;width:16%;margin-top:2px;}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>.ex-weekpicker-controlpanel>.ex-weekpicker-controlButton-left > i{border:0;}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>.ex-weekpicker-controlpanel>.ex-weekpicker-controlButton-left:hover {background-color:rgb(241, 241, 241)!important;}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>.ex-weekpicker-controlpanel>.ex-weekpicker-controlButton-left:hover i{background-color:rgb(241, 241, 241)!important;}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>.ex-weekpicker-controlpanel>.ex-weekpicker-controlButton-left > i {text-align:center;vertical-align:center;}
+
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>.ex-weekpicker-controlpanel>.ex-weekpicker-controlButton-right{float:right;width:16%;margin-top:2px;right:0;}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>.ex-weekpicker-controlpanel>.ex-weekpicker-controlButton-right > i{border:0;}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>.ex-weekpicker-controlpanel>.ex-weekpicker-controlButton-right:hover {background-color:rgb(241, 241, 241)!important;}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>.ex-weekpicker-controlpanel>.ex-weekpicker-controlButton-right:hover i{background-color:rgb(241, 241, 241)!important;}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>.ex-weekpicker-controlpanel>.ex-weekpicker-controlButton-right > i {text-align:center;vertical-align:center;}
+
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>table>tbody>.ex-weekpicker-weekSelect{font-family:Arial;}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>table>tbody>.ex-weekpicker-weekSelect:hover{background-color:#95c6f6;color:white;}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>table>tbody>.ex-weekpicker-weekSelect:active{background-color:rgb(4, 29, 77) !important;}
+
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>table>tbody>.clicked{background-color:#95c6f6 !important;color:white;}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>table>tbody>.setted{background-color:rgb(97, 199, 246) !important;color:white !important;}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>table>tbody>tr>.today{background-color:#fffa90 !important;color:#777620 !important;}
+
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>table>tbody{
+    color: #454545;
+    text-align:center;
+    font-size:13px;
+    padding: 0.2em;
+    text-decoration:none;
+    border-right:1px solid rgb(200,200,200);
+}
+
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>table{min-width:174px;max-width:224px;}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>table>thead{width:100%}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>table>thead>tr>th{padding:0.2em;font-size:14.5px;border:0;box-sizing:border-box;color:#0f4070}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>table>tbody>tr:nth-child(2n){background-color:white;}
+.ex-weekpicker>.ex-weekpicker-ui-weekpicker>table>tbody>tr:nth-child(2n+1){background-color:#f6f6f6;}

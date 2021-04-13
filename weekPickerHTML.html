@@ -39,9 +39,9 @@
     <script src="ex-date17.js" type="text/javascript"></script>
     <script type="text/javascript">
         $(document).ready(function () {
-            option = {
+            $("#date0").Weekpicker({
                 firstDay: 1, //0 : sunday시작 , 1: monday 시작
-                showWeek: true, // 몇 번째 주인지 나옴
+                showWeek: false, // 몇 번째 주인지 나옴
                 weekHeader: 'WK',
                 //monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
                 displayTemplate: function (weekName, firstDate, lastDate) {  //어떻게 표시할지 사용자가 지정 가능
@@ -57,31 +57,67 @@
                     }
                     return year + " "+ startPoint+" ~ " + endPoint
                 }
-            };
-
-            $("#date0").Weekpicker(option)
-            $("#date1").Weekpicker(option)
-            $("#date2").Weekpicker(option)
+            })
+            $("#date1").Weekpicker({
+                firstDay: 1, //0 : sunday시작 , 1: monday 시작
+                showWeek: true, // 몇 번째 주인지 나옴
+                weekHeader: 'WK',
+                //monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+                displayTemplate: function (weekName, firstDate, lastDate) {  //어떻게 표시할지 사용자가 지정 가능
+                    let format = 'MM/dd'
+                    startPoint = formatDate(firstDate, format)
+                    endPoint = formatDate(lastDate, format)
+                    nthWeek = (String(weekName).length < 2 ? '0' + String(weekName) : String(weekName))
+                    year = ""
+                    if (firstDate.getFullYear() == lastDate.getFullYear()) year = firstDate.getFullYear()
+                    else if (firstDate.getFullYear() < lastDate.getFullYear()) {
+                        if (lastDate.getMonth() == 0) year = lastDate.getFullYear()
+                        else if (firstDate.getMonth() == 11) year = firstDate.getFullYear()
+                    }
+                    return year + "-W"+ nthWeek
+                }
+            })
+            $("#date2").Weekpicker({
+                firstDay: 0, //0 : sunday시작 , 1: monday 시작
+                showWeek: true, // 몇 번째 주인지 나옴
+                weekHeader: 'WK',
+                //monthNames: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+                displayTemplate: function (weekName, firstDate, lastDate) {  //어떻게 표시할지 사용자가 지정 가능
+                    let format = 'MM/dd'
+                    startPoint = formatDate(firstDate, format)
+                    endPoint = formatDate(lastDate, format)
+                    nthWeek = (String(weekName).length < 2 ? '0' + String(weekName) : String(weekName))
+                    year = ""
+                    if (firstDate.getFullYear() == lastDate.getFullYear()) year = firstDate.getFullYear()
+                    else if (firstDate.getFullYear() < lastDate.getFullYear()) {
+                        if (lastDate.getMonth() == 0) year = lastDate.getFullYear()
+                        else if (firstDate.getMonth() == 11) year = firstDate.getFullYear()
+                    }
+                    return year + "/"+ startPoint+" ~ " + year + "/"+ endPoint
+                }
+            })
         });
 
         function showValue1() {
             let weekcal  = $('#date0').Weekpicker('instance');
-            alert(weekcal.getValue());
+            alert(weekcal.getWeekValue());
         }
         function showValue2() {
-
+            let weekcal  = $('#date1').Weekpicker('instance');
+            alert(weekcal.getWeekValue());
         }
         function showValue3() {
-            $('#date2').Weekpicker('instance').setValue();
+            let weekcal  = $('#date2').Weekpicker('instance');
+            alert(weekcal.getWeekValue());
         }
         function setValue1(val) {
-            $('#date0').Weekpicker('instance');
+            $('#date0').Weekpicker('instance').setWeekValue(val);
         }
         function setValue2(val) {
-            $('#date1').Weekpicker('instance');
+            $('#date1').Weekpicker('instance').setWeekValue(val);
         }
         function setValue3(val) {
-            $('#date2').Weekpicker('instance');
+            $('#date2').Weekpicker('instance').setWeekValue(val);
         }
     </script>
 </body>
